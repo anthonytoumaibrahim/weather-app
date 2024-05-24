@@ -21,6 +21,7 @@ export const useWeatherData = () => {
     null
   );
   const [cityInStorage, setCityInStorage] = useState<boolean>(false);
+  const [loadError, setLoadError] = useState<boolean>(false);
 
   const storedCities: Array<WeatherDisplayType> = JSON.parse(
     localStorage.getItem("weather-app-cities") ?? "[]"
@@ -83,5 +84,7 @@ export const useWeatherData = () => {
     cityInStorage,
     removeCityFromStorage,
     getWeatherImage,
+    loadError,
+    setLoadError,
   };
 };

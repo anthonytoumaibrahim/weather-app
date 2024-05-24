@@ -15,6 +15,7 @@ import {
 
 // Components
 import Info from "./Info";
+import LoadError from "./LoadError";
 
 // Icons
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -28,6 +29,8 @@ const WeatherDisplay = () => {
     cityInStorage,
     getWeatherImage,
     removeCityFromStorage,
+    loadError,
+    setLoadError,
   } = useWeatherData();
 
   const weatherDisplaySelector = useAppSelector(
@@ -36,6 +39,7 @@ const WeatherDisplay = () => {
 
   useEffect(() => {
     const loadWeatherData = async () => {
+      setLoadError(false);
       try {
         const response = await fetch(
           `https://api.openweathermap.org/data/2.5/weather?lat=${weatherDisplaySelector.lat}&lon=${weatherDisplaySelector.long}&appid=${process.env.REACT_APP_OPENWEATHER_API_KEY}&units=metric`
@@ -43,7 +47,8 @@ const WeatherDisplay = () => {
         const data = await response.json();
         setWeatherData(data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
+        setLoadError(true);
       }
     };
     loadWeatherData();
@@ -52,9 +57,12 @@ const WeatherDisplay = () => {
     setWeatherData,
     weatherDisplaySelector.lat,
     weatherDisplaySelector.long,
+    setLoadError,
   ]);
 
-  return (
+  return loadError ? (
+    <LoadError />
+  ) : (
     <Box sx={{ display: "flex" }} alignItems="center" justifyContent="center">
       <Card sx={{ width: "100%" }}>
         <Box
