@@ -102,12 +102,12 @@ const WeatherDisplay = () => {
               />
               <Box>
                 <Typography variant="h4" color="white" fontWeight="bold">
-                  {Math.ceil(weatherData?.main.temp ?? 0)}°C
+                  {Math.round(weatherData?.main.temp ?? 0)}°C
                 </Typography>
                 <Typography variant="body2" color="white">
                   Feels like{" "}
                   <strong>
-                    {Math.ceil(weatherData?.main.feels_like ?? 0)}°C
+                    {Math.round(weatherData?.main.feels_like ?? 0)}°C
                   </strong>
                 </Typography>
               </Box>
