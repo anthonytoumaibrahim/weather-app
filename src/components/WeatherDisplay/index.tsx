@@ -105,11 +105,12 @@ const WeatherDisplay = () => {
                 <Typography variant="h4" color="white" fontWeight="bold">
                   {Math.round(weatherData?.main.temp ?? 0)}°C
                 </Typography>
-                <Typography variant="body2" color="white">
-                  Feels like{" "}
-                  <strong>
-                    {Math.round(weatherData?.main.feels_like ?? 0)}°C
-                  </strong>
+                <Typography
+                  variant="body2"
+                  color="white"
+                  textTransform="capitalize"
+                >
+                  {weatherData?.weather?.[0]?.description}
                 </Typography>
               </Box>
             </Box>

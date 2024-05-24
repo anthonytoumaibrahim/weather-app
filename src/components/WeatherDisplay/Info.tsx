@@ -44,7 +44,7 @@ const Info = ({ weatherData }: InfoProps) => {
         <InfoCard
           icon={<AirIcon fontSize="large" color="primary" />}
           title="Wind Speed"
-          value={`${weatherData?.wind.speed}m/h`}
+          value={`${weatherData?.wind.speed}m/s`}
         />
       </Grid>
       <Grid item xs={6} sm={4} md={3}>
