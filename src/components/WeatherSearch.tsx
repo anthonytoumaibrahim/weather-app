@@ -3,9 +3,10 @@ import { ChangeEvent, FormEvent } from "react";
 import { useSearchForm } from "../hooks/useSearchForm";
 import { useAppDispatch } from "../hooks/redux";
 
-// MUI components
+// MUI components & icons
 import { Alert, FormControl, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import SearchIcon from "@mui/icons-material/Search";
 
 type OpenWeatherAPIResponseType = Array<{
   name: string;
@@ -92,6 +93,7 @@ const WeatherSearch = () => {
           type="submit"
           loading={isSearching}
           sx={{ paddingInline: 4 }}
+          endIcon={<SearchIcon />}
         >
           Search
         </LoadingButton>
