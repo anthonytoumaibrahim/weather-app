@@ -28,7 +28,9 @@ const App = () => {
           Let's start by searching for a city.
         </Typography>
         <WeatherSearch />
-        {weatherDisplaySelector.lat && <WeatherDisplay />}
+        {weatherDisplaySelector.lat && weatherDisplaySelector.long && (
+          <WeatherDisplay />
+        )}
       </Box>
     </Container>
   );
