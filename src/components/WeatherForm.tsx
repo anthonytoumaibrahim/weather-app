@@ -1,12 +1,13 @@
 // React stuff & hooks
-import { ChangeEvent, FormEvent } from "react";
+import { FormEvent } from "react";
 import { useSearchForm } from "../hooks/useSearchForm";
 import { useAppDispatch } from "../hooks/redux";
 
 // MUI components & icons
-import { Alert, FormControl, TextField } from "@mui/material";
+import { Alert, FormControl } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import SearchIcon from "@mui/icons-material/Search";
+import WeatherSearch from "./WeatherSearch";
 
 type OpenWeatherAPIResponseType = Array<{
   name: string;
@@ -28,13 +29,9 @@ const WeatherForm = () => {
     setSubmitError,
   } = useSearchForm();
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSubmitError(false);
-    setCityName(e.target.value);
-  };
-
   const handleFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setSubmitError(false);
     setSearchError(null);
     if (cityName.trim() === "") {
       return setSubmitError(true);
@@ -50,6 +47,7 @@ const WeatherForm = () => {
       );
       const data: OpenWeatherAPIResponseType = await response.json();
       if (data?.length === 0) {
+        setIsSearching(false);
         return setSearchError("Sorry, couldn't find a city with this name.");
       }
       // City found
@@ -67,7 +65,6 @@ const WeatherForm = () => {
         "Sorry, something went wrong and we couldn't make a request to the API."
       );
     }
-
     setIsSearching(false);
   };
 
@@ -77,15 +74,11 @@ const WeatherForm = () => {
         sx={{ display: "flex", flexDirection: "row", gap: 2 }}
         fullWidth
       >
-        <TextField
-          id="weather-search"
-          label="Enter a city name, e.g: Dubai"
-          variant="outlined"
-          value={cityName}
-          onChange={handleInputChange}
-          error={submitError}
-          fullWidth
-          disabled={isSearching}
+        <WeatherSearch
+          cityName={cityName}
+          isSearching={isSearching}
+          submitError={submitError}
+          setCityName={(name) => setCityName(name)}
         />
         <LoadingButton
           variant="contained"
