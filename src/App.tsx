@@ -1,10 +1,11 @@
+import { useAppSelector } from "./hooks/redux";
 import { Box, Typography } from "@mui/material";
 import "./App.css";
 
 // Components
 import Container from "@mui/material/Container";
 import WeatherSearch from "./components/WeatherSearch";
-import { useAppSelector } from "./hooks/redux";
+import WeatherDisplay from "./components/WeatherDisplay";
 
 const App = () => {
   const weatherDisplaySelector = useAppSelector(
@@ -27,6 +28,7 @@ const App = () => {
           Let's start by searching for a city.
         </Typography>
         <WeatherSearch />
+        {weatherDisplaySelector.lat && <WeatherDisplay />}
       </Box>
     </Container>
   );
