@@ -1,12 +1,12 @@
 import { useAppSelector } from "./hooks/redux";
-import { Box, Button, Tooltip, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import "./App.css";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 
 // Components
 import Container from "@mui/material/Container";
 import WeatherForm from "./components/WeatherForm";
 import WeatherDisplay from "./components/WeatherDisplay";
+import Favorites from "./components/Favorites";
 
 const App = () => {
   const weatherDisplaySelector = useAppSelector(
@@ -33,17 +33,7 @@ const App = () => {
         {weatherDisplaySelector.lat && weatherDisplaySelector.long && (
           <WeatherDisplay />
         )}
-        <Tooltip
-          title="Opens the cities that you added to your Favorites"
-          placement="top"
-        >
-          <Button
-            color="error"
-            endIcon={<FavoriteBorderOutlinedIcon fontSize="large" />}
-          >
-            See Favorite Cities
-          </Button>
-        </Tooltip>
+        <Favorites />
       </Box>
     </Container>
   );
