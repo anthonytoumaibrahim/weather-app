@@ -86,5 +86,6 @@ export const useWeatherData = () => {
     getWeatherImage,
     loadError,
     setLoadError,
+    storedCities,
   };
 };
