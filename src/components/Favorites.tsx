@@ -6,21 +6,20 @@ import {
   Button,
   Dialog,
   DialogTitle,
-  IconButton,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
   Tooltip,
+  Typography,
 } from "@mui/material";
 
 // Icons
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import ClearIcon from "@mui/icons-material/Clear";
 
 const Favorites = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { storedCities, removeCityFromStorage } = useWeatherData();
+  const { storedCities } = useWeatherData();
 
   return (
     <>
@@ -37,19 +36,15 @@ const Favorites = () => {
         </Button>
       </Tooltip>
       <Dialog onClose={() => setIsOpen(false)} open={isOpen}>
-        <DialogTitle>Favorite Cities</DialogTitle>
+        <DialogTitle textAlign="center">Favorite Cities</DialogTitle>
+        {storedCities.length === 0 && (
+          <Typography paddingX={2} gutterBottom>
+            You haven't added any city to your Favorites yet.
+          </Typography>
+        )}
         <List sx={{ pt: 0, px: 2 }}>
           {storedCities.map((city, index) => (
-            <ListItem
-              disableGutters
-              disablePadding
-              key={index}
-              secondaryAction={
-                <IconButton>
-                  <ClearIcon color="error" />
-                </IconButton>
-              }
-            >
+            <ListItem disableGutters disablePadding key={index}>
               <ListItemButton
                 onClick={() => console.log(city.cityName)}
                 sx={{ display: "flex", justifyContent: "space-between" }}
