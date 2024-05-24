@@ -6,8 +6,8 @@ import { useAppDispatch } from "../hooks/redux";
 // MUI components & icons
 import { Alert, FormControl } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import SearchIcon from "@mui/icons-material/Search";
 import WeatherSearch from "./WeatherSearch";
+import SearchIcon from "@mui/icons-material/Search";
 
 type OpenWeatherAPIResponseType = Array<{
   name: string;
@@ -71,7 +71,11 @@ const WeatherForm = () => {
   return (
     <form noValidate autoComplete="off" onSubmit={handleFormSubmit}>
       <FormControl
-        sx={{ display: "flex", flexDirection: "row", gap: 2 }}
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          gap: 2,
+        }}
         fullWidth
       >
         <WeatherSearch
