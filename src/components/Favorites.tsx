@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useWeatherData } from "../hooks/useWeatherDisplay";
+import { useAppDispatch } from "../hooks/redux";
 
 // MUI
 import {
@@ -16,10 +17,24 @@ import {
 
 // Icons
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import { WeatherDisplayType } from "../shared/types/WeatherDisplay.type";
 
 const Favorites = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { storedCities } = useWeatherData();
+  const dispatch = useAppDispatch();
+
+  const handleCitySelection = (city: WeatherDisplayType) => {
+    dispatch({
+      type: "weatherDisplaySlice/addCity",
+      payload: {
+        cityName: city.cityName,
+        lat: city.lat,
+        long: city.long,
+      },
+    });
+    setIsOpen(false);
+  };
 
   return (
     <>
@@ -46,7 +61,7 @@ const Favorites = () => {
           {storedCities.map((city, index) => (
             <ListItem disableGutters disablePadding key={index}>
               <ListItemButton
-                onClick={() => console.log(city.cityName)}
+                onClick={() => handleCitySelection(city)}
                 sx={{ display: "flex", justifyContent: "space-between" }}
               >
                 <ListItemText primary={city.cityName} />
