@@ -1,12 +1,21 @@
 // React stuff & hooks
 import { ChangeEvent, FormEvent } from "react";
 import { useSearchForm } from "../hooks/useSearchForm";
+import { useAppDispatch } from "../hooks/redux";
 
 // MUI components
 import { Alert, FormControl, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
+type OpenWeatherAPIResponseType = Array<{
+  name: string;
+  lat: number;
+  lon: number;
+}>;
+
 const WeatherSearch = () => {
+  const dispatch = useAppDispatch();
+
   const {
     cityName,
     setCityName,
@@ -38,10 +47,20 @@ const WeatherSearch = () => {
       const response = await fetch(
         `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${process.env.REACT_APP_OPENWEATHER_API_KEY}`
       );
-      const data = await response.json();
+      const data: OpenWeatherAPIResponseType = await response.json();
       if (data?.length === 0) {
         return setSearchError("Sorry, couldn't find a city with this name.");
       }
+      // City found
+      const { name, lat, lon } = data[0];
+      dispatch({
+        type: "weatherDisplaySlice/addCity",
+        payload: {
+          cityName: name,
+          lat: lat,
+          long: lon,
+        },
+      });
     } catch (error) {
       setSearchError(
         "Sorry, something went wrong and we couldn't make a request to the API."

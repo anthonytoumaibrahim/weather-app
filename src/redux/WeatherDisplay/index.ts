@@ -1,10 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-
-type WeatherDisplayType = {
-  cityName: string | null;
-  lat: string | number | null;
-  long: string | number | null;
-};
+import type { WeatherDisplayType } from "../../shared/types/WeatherDisplay.type";
 
 const initState: WeatherDisplayType = {
   cityName: null,
