@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useAppSelector } from "../hooks/redux";
-import { WeatherDataInterface } from "../shared/interfaces/WeatherData.interface";
+import { useAppSelector } from "../../hooks/redux";
+import { WeatherDataInterface } from "../../shared/interfaces/WeatherData.interface";
 
 // MUI
 import {
@@ -14,13 +14,13 @@ import {
 } from "@mui/material";
 
 // Images
-import Thunderstorm_bg from "../assets/images/2xx.jpg";
-import Drizzle_bg from "../assets/images/3xx.jpg";
-import Rain_bg from "../assets/images/5xx.jpg";
-import Snow_bg from "../assets/images/6xx.jpg";
-import Fog_bg from "../assets/images/7xx.jpg";
-import Cloudy_bg from "../assets/images/8xx.jpg";
-import Sunny_bg from "../assets/images/800.jpg";
+import Thunderstorm_bg from "../../assets/images/2xx.jpg";
+import Drizzle_bg from "../../assets/images/3xx.jpg";
+import Rain_bg from "../../assets/images/5xx.jpg";
+import Snow_bg from "../../assets/images/6xx.jpg";
+import Fog_bg from "../../assets/images/7xx.jpg";
+import Cloudy_bg from "../../assets/images/8xx.jpg";
+import Sunny_bg from "../../assets/images/800.jpg";
 
 const WeatherDisplay = () => {
   const weatherDisplaySelector = useAppSelector(
@@ -92,26 +92,63 @@ const WeatherDisplay = () => {
 
   return (
     <Box sx={{ display: "flex" }} alignItems="center" justifyContent="center">
-      <Card sx={{ maxWidth: "100%" }} style={{ position: "relative" }}>
-        <CardMedia
-          sx={{ height: 360 }}
-          image={getWeatherImage()}
-          title="green iguana"
-        />
-        <CardContent>
+      <Card sx={{ width: "100%" }}>
+        <Box
+          height={360}
+          position="relative"
+          sx={{ display: "flex" }}
+          alignItems="center"
+          justifyContent="center"
+        >
           <Typography
             position="absolute"
+            zIndex={1}
             top={20}
             left={20}
             variant="h4"
             component="div"
             color="white"
           >
-            {weatherDisplaySelector.cityName}
+            Weather in {weatherDisplaySelector.cityName}
           </Typography>
+          <CardMedia
+            sx={{
+              height: "100%",
+              width: "100%",
+              position: "absolute",
+              top: 0,
+              left: 0,
+            }}
+            image={getWeatherImage()}
+            title={weatherData?.weather?.[0]?.description}
+          />
+
+          <Box position="relative" zIndex={1}>
+            <Box sx={{ display: "flex" }} alignItems="center">
+              <img
+                src={`https://openweathermap.org/img/wn/${weatherData?.weather?.[0]?.icon}@2x.png`}
+                alt=""
+              />
+              <Box>
+                <Typography variant="h4" color="white" fontWeight="bold">
+                  {Math.round(weatherData?.main.temp ?? 0)}°C
+                </Typography>
+                <Typography variant="body2" color="white">
+                  Feels like{" "}
+                  <strong>
+                    {Math.round(weatherData?.main.feels_like ?? 0)}°C
+                  </strong>
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+
+        <CardContent>
           <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
+            The current weather in{" "}
+            <strong>{weatherDisplaySelector.cityName}</strong> is{" "}
+            <strong>{weatherData?.weather?.[0]?.main}</strong>.
           </Typography>
         </CardContent>
         <CardActions>
