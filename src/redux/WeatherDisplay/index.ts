@@ -2,9 +2,9 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type { WeatherDisplayType } from "../../shared/types/WeatherDisplay.type";
 
 const initState: WeatherDisplayType = {
-  cityName: null,
-  lat: null,
-  long: null,
+  cityName: "Dubai",
+  long: 55.2925,
+  lat: 25.2653,
 };
 
 export const weatherDisplaySlice = createSlice({

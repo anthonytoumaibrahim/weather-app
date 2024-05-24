@@ -6,14 +6,6 @@ export const useSearchForm = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
 
-  const addCityToStorage = () => {
-    const storedCities: Array<string> = JSON.parse(
-      localStorage.getItem("weather-app-cities") ?? "[]"
-    );
-    storedCities.push(cityName);
-    localStorage.setItem("weather-app-cities", JSON.stringify(storedCities));
-  };
-
   return {
     cityName,
     setCityName,
@@ -23,6 +15,5 @@ export const useSearchForm = () => {
     setIsSearching,
     searchError,
     setSearchError,
-    addCityToStorage,
   };
 };

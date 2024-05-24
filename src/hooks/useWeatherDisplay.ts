@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { WeatherDataInterface } from "../shared/interfaces/WeatherData.interface";
+import { WeatherDisplayType } from "../shared/types/WeatherDisplay.type";
 
 export const useWeatherData = () => {
   // Dummy data for testing
@@ -37,5 +38,13 @@ export const useWeatherData = () => {
     },
   });
 
-  return { weatherData, setWeatherData };
+  const addCityToStorage = (city: WeatherDisplayType) => {
+    const storedCities: Array<WeatherDisplayType> = JSON.parse(
+      localStorage.getItem("weather-app-cities") ?? "[]"
+    );
+    storedCities.push(city);
+    localStorage.setItem("weather-app-cities", JSON.stringify(storedCities));
+  };
+
+  return { weatherData, setWeatherData, addCityToStorage };
 };
