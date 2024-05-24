@@ -3,10 +3,12 @@ import { ChangeEvent, FormEvent, useState } from "react";
 
 // MUI components
 import { Button, FormControl, TextField } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
 const WeatherSearch = () => {
   const [cityName, setCityName] = useState("");
   const [submitError, setSubmitError] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSubmitError(false);
@@ -18,6 +20,7 @@ const WeatherSearch = () => {
     if (cityName.trim() === "") {
       return setSubmitError(true);
     }
+    setIsSearching(true);
   };
 
   return (
@@ -31,14 +34,16 @@ const WeatherSearch = () => {
           onChange={handleInputChange}
           error={submitError}
           fullWidth
+          disabled={isSearching}
         />
-        <Button
+        <LoadingButton
           variant="contained"
           color={submitError ? "error" : "primary"}
           type="submit"
+          loading={isSearching}
         >
           Search
-        </Button>
+        </LoadingButton>
       </FormControl>
     </form>
   );
