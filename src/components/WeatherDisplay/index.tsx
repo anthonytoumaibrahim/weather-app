@@ -25,8 +25,12 @@ import Fog_bg from "../../assets/images/7xx.jpg";
 import Cloudy_bg from "../../assets/images/8xx.jpg";
 import Sunny_bg from "../../assets/images/800.jpg";
 
+// Icons
+import FavoriteIcon from "@mui/icons-material/Favorite";
+
 const WeatherDisplay = () => {
-  const { weatherData, setWeatherData } = useWeatherData();
+  const { weatherData, setWeatherData, addCityToStorage, cityInStorage } =
+    useWeatherData();
 
   const weatherDisplaySelector = useAppSelector(
     (state) => state.weatherDisplaySlice
@@ -123,9 +127,19 @@ const WeatherDisplay = () => {
             <strong>{weatherData?.weather?.[0]?.main}</strong>.
           </Typography>
         </CardContent>
-        <CardActions>
-          <Button size="small">Share</Button>
-          <Button size="small">Learn More</Button>
+        <CardActions
+          sx={{
+            display: "flex",
+            justifyContent: { xs: "center", sm: "end" },
+          }}
+        >
+          {cityInStorage ? (
+            <Button size="small">Remove from Favorites</Button>
+          ) : (
+            <Button size="small" startIcon={<FavoriteIcon />} color="error">
+              Add to Favorites
+            </Button>
+          )}
         </CardActions>
       </Card>
     </Box>

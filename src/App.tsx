@@ -15,7 +15,8 @@ const App = () => {
   return (
     <Container maxWidth="md">
       <Box
-        padding={4}
+        marginBlock={4}
+        padding={{ xs: 1, md: 4 }}
         textAlign="center"
         sx={{ display: "flex" }}
         gap={2}

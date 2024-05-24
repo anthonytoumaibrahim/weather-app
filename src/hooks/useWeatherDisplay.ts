@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { WeatherDataInterface } from "../shared/interfaces/WeatherData.interface";
 import { WeatherDisplayType } from "../shared/types/WeatherDisplay.type";
+import { useAppSelector } from "./redux";
 
 export const useWeatherData = () => {
+  const weatherDisplaySelector = useAppSelector(
+    (state) => state.weatherDisplaySlice
+  );
   // Dummy data for testing
   const [weatherData, setWeatherData] = useState<WeatherDataInterface | null>({
     weather: [
@@ -37,6 +41,7 @@ export const useWeatherData = () => {
       sunset: 1716562872,
     },
   });
+  const [cityInStorage, setCityInStorage] = useState<boolean>(false);
 
   const addCityToStorage = (city: WeatherDisplayType) => {
     const storedCities: Array<WeatherDisplayType> = JSON.parse(
@@ -46,5 +51,23 @@ export const useWeatherData = () => {
     localStorage.setItem("weather-app-cities", JSON.stringify(storedCities));
   };
 
-  return { weatherData, setWeatherData, addCityToStorage };
+  const checkIfCityInStorage = () => {
+    const cityName = weatherDisplaySelector.cityName;
+    const storedCities: Array<WeatherDisplayType> = JSON.parse(
+      localStorage.getItem("weather-app-cities") ?? "[]"
+    );
+    const existsArr = storedCities.filter((city) => city.cityName === cityName);
+    setCityInStorage(existsArr?.length > 0);
+  };
+
+  useEffect(() => {
+    checkIfCityInStorage();
+  }, [weatherData]);
+
+  return {
+    weatherData,
+    setWeatherData,
+    addCityToStorage,
+    cityInStorage,
+  };
 };
