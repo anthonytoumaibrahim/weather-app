@@ -4,7 +4,7 @@ import "./App.css";
 
 // Components
 import Container from "@mui/material/Container";
-import WeatherSearch from "./components/WeatherSearch";
+import WeatherForm from "./components/WeatherForm";
 import WeatherDisplay from "./components/WeatherDisplay";
 
 const App = () => {
@@ -28,7 +28,7 @@ const App = () => {
         <Typography variant="h5">
           Let's start by searching for a city.
         </Typography>
-        <WeatherSearch />
+        <WeatherForm />
         {weatherDisplaySelector.lat && weatherDisplaySelector.long && (
           <WeatherDisplay />
         )}
