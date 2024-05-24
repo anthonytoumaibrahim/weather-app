@@ -1,4 +1,4 @@
-import { useWeatherData } from "../../hooks/useWeatherDisplay";
+import { WeatherDataInterface } from "../../shared/interfaces/WeatherData.interface";
 import { Grid } from "@mui/material";
 import InfoCard from "./InfoCard";
 
@@ -10,9 +10,11 @@ import WaterDropIcon from "@mui/icons-material/WaterDrop";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import WbTwilightIcon from "@mui/icons-material/WbTwilight";
 
-const Info = () => {
-  const { weatherData } = useWeatherData();
+interface InfoProps {
+  weatherData: WeatherDataInterface | null;
+}
 
+const Info = ({ weatherData }: InfoProps) => {
   const convertTimestamp = (timestamp: number) => {
     const date = new Date(timestamp * 1000);
     const timeString = date.toLocaleTimeString("en-US", {

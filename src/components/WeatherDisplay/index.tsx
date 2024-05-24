@@ -35,8 +35,24 @@ const WeatherDisplay = () => {
   );
 
   useEffect(() => {
-    // Load weather data on load
-  }, []);
+    const loadWeatherData = async () => {
+      try {
+        const response = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${weatherDisplaySelector.lat}&lon=${weatherDisplaySelector.long}&appid=${process.env.REACT_APP_OPENWEATHER_API_KEY}&units=metric`
+        );
+        const data = await response.json();
+        setWeatherData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadWeatherData();
+  }, [
+    weatherDisplaySelector.cityName,
+    setWeatherData,
+    weatherDisplaySelector.lat,
+    weatherDisplaySelector.long,
+  ]);
 
   return (
     <Box sx={{ display: "flex" }} alignItems="center" justifyContent="center">
@@ -93,12 +109,7 @@ const WeatherDisplay = () => {
         </Box>
 
         <CardContent>
-          <Info />
-          <Typography variant="body2" color="text.secondary">
-            The current weather in{" "}
-            <strong>{weatherDisplaySelector.cityName}</strong> is{" "}
-            <strong>{weatherData?.weather?.[0]?.main}</strong>.
-          </Typography>
+          <Info weatherData={weatherData} />
         </CardContent>
         <CardActions
           sx={{
