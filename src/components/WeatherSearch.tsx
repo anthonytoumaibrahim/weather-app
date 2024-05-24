@@ -16,7 +16,6 @@ const WeatherSearch = () => {
     setSearchError,
     submitError,
     setSubmitError,
-    addCityToStorage,
   } = useSearchForm();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -43,8 +42,6 @@ const WeatherSearch = () => {
       if (data?.length === 0) {
         return setSearchError("Sorry, couldn't find a city with this name.");
       }
-      // City found
-      addCityToStorage();
     } catch (error) {
       setSearchError(
         "Sorry, something went wrong and we couldn't make a request to the API."
