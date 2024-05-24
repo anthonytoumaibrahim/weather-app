@@ -16,6 +16,7 @@ const WeatherSearch = () => {
     setSearchError,
     submitError,
     setSubmitError,
+    addCityToStorage,
   } = useSearchForm();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +31,10 @@ const WeatherSearch = () => {
       return setSubmitError(true);
     }
     setIsSearching(true);
+    await searchForCity();
+  };
 
+  const searchForCity = async () => {
     try {
       const response = await fetch(
         `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${process.env.REACT_APP_OPENWEATHER_API_KEY}`
@@ -39,6 +43,8 @@ const WeatherSearch = () => {
       if (data?.length === 0) {
         return setSearchError("Sorry, couldn't find a city with this name.");
       }
+      // City found
+      addCityToStorage();
     } catch (error) {
       setSearchError(
         "Sorry, something went wrong and we couldn't make a request to the API."
