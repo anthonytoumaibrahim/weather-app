@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAppSelector } from "../../hooks/redux";
-import { WeatherDataInterface } from "../../shared/interfaces/WeatherData.interface";
+import { useWeatherData } from "../../hooks/useWeatherDisplay";
 
 // MUI
 import {
@@ -13,6 +13,9 @@ import {
   Typography,
 } from "@mui/material";
 
+// Components
+import Info from "./Info";
+
 // Images
 import Thunderstorm_bg from "../../assets/images/2xx.jpg";
 import Drizzle_bg from "../../assets/images/3xx.jpg";
@@ -23,43 +26,11 @@ import Cloudy_bg from "../../assets/images/8xx.jpg";
 import Sunny_bg from "../../assets/images/800.jpg";
 
 const WeatherDisplay = () => {
+  const { weatherData, setWeatherData } = useWeatherData();
+
   const weatherDisplaySelector = useAppSelector(
     (state) => state.weatherDisplaySlice
   );
-  // Dummy data for testing
-  const [weatherData, setWeatherData] = useState<WeatherDataInterface | null>({
-    weather: [
-      {
-        id: 800,
-        main: "Clear",
-        description: "clear sky",
-        icon: "01d",
-      },
-    ],
-    main: {
-      temp: 35.83,
-      feels_like: 37.53,
-      temp_min: 35.19,
-      temp_max: 37.22,
-      pressure: 1002,
-      humidity: 36,
-    },
-    visibility: 10000,
-    wind: {
-      speed: 6.69,
-      deg: 290,
-    },
-    clouds: {
-      all: 0,
-    },
-    sys: {
-      type: 1,
-      id: 7537,
-      country: "AE",
-      sunrise: 1716514230,
-      sunset: 1716562872,
-    },
-  });
 
   const getWeatherImage = () => {
     const weatherId = weatherData?.weather?.[0]?.id;
@@ -145,6 +116,7 @@ const WeatherDisplay = () => {
         </Box>
 
         <CardContent>
+          <Info />
           <Typography variant="body2" color="text.secondary">
             The current weather in{" "}
             <strong>{weatherDisplaySelector.cityName}</strong> is{" "}
