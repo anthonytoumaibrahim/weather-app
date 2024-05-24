@@ -43,19 +43,31 @@ export const useWeatherData = () => {
   });
   const [cityInStorage, setCityInStorage] = useState<boolean>(false);
 
-  const addCityToStorage = (city: WeatherDisplayType) => {
-    const storedCities: Array<WeatherDisplayType> = JSON.parse(
-      localStorage.getItem("weather-app-cities") ?? "[]"
-    );
+  const storedCities: Array<WeatherDisplayType> = JSON.parse(
+    localStorage.getItem("weather-app-cities") ?? "[]"
+  );
+
+  const addCityToStorage = () => {
+    const city = weatherDisplaySelector;
     storedCities.push(city);
     localStorage.setItem("weather-app-cities", JSON.stringify(storedCities));
+    setCityInStorage(true);
+  };
+
+  const removeCityFromStorage = () => {
+    const cityName = weatherDisplaySelector.cityName;
+    const newCitiesInStorage = storedCities.filter(
+      (city) => city.cityName !== cityName
+    );
+    localStorage.setItem(
+      "weather-app-cities",
+      JSON.stringify(newCitiesInStorage)
+    );
+    setCityInStorage(false);
   };
 
   const checkIfCityInStorage = () => {
     const cityName = weatherDisplaySelector.cityName;
-    const storedCities: Array<WeatherDisplayType> = JSON.parse(
-      localStorage.getItem("weather-app-cities") ?? "[]"
-    );
     const existsArr = storedCities.filter((city) => city.cityName === cityName);
     setCityInStorage(existsArr?.length > 0);
   };
@@ -69,5 +81,6 @@ export const useWeatherData = () => {
     setWeatherData,
     addCityToStorage,
     cityInStorage,
+    removeCityFromStorage,
   };
 };

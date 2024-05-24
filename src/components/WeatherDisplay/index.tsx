@@ -27,10 +27,16 @@ import Sunny_bg from "../../assets/images/800.jpg";
 
 // Icons
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import BookmarkRemoveIcon from "@mui/icons-material/BookmarkRemove";
 
 const WeatherDisplay = () => {
-  const { weatherData, setWeatherData, addCityToStorage, cityInStorage } =
-    useWeatherData();
+  const {
+    weatherData,
+    setWeatherData,
+    addCityToStorage,
+    cityInStorage,
+    removeCityFromStorage,
+  } = useWeatherData();
 
   const weatherDisplaySelector = useAppSelector(
     (state) => state.weatherDisplaySlice
@@ -134,9 +140,21 @@ const WeatherDisplay = () => {
           }}
         >
           {cityInStorage ? (
-            <Button size="small">Remove from Favorites</Button>
+            <Button
+              size="small"
+              startIcon={<BookmarkRemoveIcon />}
+              color="warning"
+              onClick={() => removeCityFromStorage()}
+            >
+              Remove from Favorites
+            </Button>
           ) : (
-            <Button size="small" startIcon={<FavoriteIcon />} color="error">
+            <Button
+              size="small"
+              startIcon={<FavoriteIcon />}
+              color="error"
+              onClick={() => addCityToStorage()}
+            >
               Add to Favorites
             </Button>
           )}
